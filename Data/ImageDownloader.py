@@ -12,6 +12,8 @@ def createMetadataframe():
     df_copy['IMGName2'] = df_copy.index.astype(str) + "_2_" + df_copy['year'] + "_" + df_copy['season'] + "_" + df_copy['productType'] + "_" + df_copy['section'] + ".jpg"
     df_copy['IMGName3'] = df_copy.index.astype(str) + "_3_" + df_copy['year'] + "_" + df_copy['season'] + "_" + df_copy['productType'] + "_" + df_copy['section'] + ".jpg"
 
+    df_copy.dropna(inplace=True)
+
     df_copy.to_csv('Data/Metadata.csv', index=False)
 
 def downloadImages():
