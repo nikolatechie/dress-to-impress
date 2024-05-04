@@ -27,7 +27,7 @@ public class ClothesImageController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getListOfStocks(
+    public ResponseEntity<?> getClothesImages(
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "12") int size
     ) {
