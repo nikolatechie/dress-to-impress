@@ -1,6 +1,6 @@
 package com.dresstoimpress.controller;
 
-import com.dresstoimpress.model.LoginRequest;
+import com.dresstoimpress.requests.LoginRequest;
 import com.dresstoimpress.service.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
