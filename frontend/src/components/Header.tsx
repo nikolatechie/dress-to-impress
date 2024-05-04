@@ -17,7 +17,7 @@ function Header() {
                             <Nav.Link active={true}>Home</Nav.Link>
                             {
                                 !isAuthenticated ? (
-                                        <div>
+                                        <div className="d-block d-lg-none">
                                             <a href="/login"
                                                className="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
                                                 Login
