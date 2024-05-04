@@ -19,4 +19,21 @@ public class ClothesImage {
     @NotNull
     @NotBlank
     private String url;
+
+    @NotNull
+    private int year;
+
+    @NotNull
+    @NotBlank
+    private String season;
+
+    @NotNull
+    private int productType;
+
+    @NotNull
+    private int section;
+
+    @NotNull
+    @NotBlank
+    private String imageName;
 }
