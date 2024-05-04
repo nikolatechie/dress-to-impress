@@ -10,7 +10,7 @@ function GalleryComponent(props: GalleryComponentProps) {
         <>
             <div className="card card-hover border-0 bg-transparent">
                 <div className="position-relative">
-                    <img src={props.imageSrc} style={{height: "300px", width: "300px"}} className="rounded-3" alt="Albert Flores"/>
+                    <img src={props.imageSrc} style={{height: "300px", width: "300px", objectFit: "cover"}} className="rounded-3" alt="Albert Flores"/>
                     <div
                         className="card-img-overlay d-flex flex-column align-items-center justify-content-center rounded-3">
                         <span
