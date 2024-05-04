@@ -36,15 +36,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().and()
-                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection for simplicity
-                .authorizeRequests(auth -> auth
-                        .antMatchers("/register", Constants.VERIFY_EMAIL_PATH, "/login").permitAll()
-                        .anyRequest().authenticated() // Require authentication for all other requests
-                )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .httpBasic(AbstractHttpConfigurer::disable)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+            .cors().and()
+            .csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection for simplicity
+            .authorizeRequests(auth -> auth
+                .antMatchers(
+                    "/register",
+                        Constants.VERIFY_EMAIL_PATH,
+                        Constants.CLOTHES_IMAGES_PATH,
+                        "/login"
+                ).permitAll()
+                .anyRequest().authenticated() // Require authentication for all other requests
+            )
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .httpBasic(AbstractHttpConfigurer::disable)
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

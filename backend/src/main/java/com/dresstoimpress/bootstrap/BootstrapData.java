@@ -27,7 +27,7 @@ public class BootstrapData implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         // Check if the database is empty
         if (clothesImageRepository.count() == 0) {
             // Populate the table with links from the CSV file
