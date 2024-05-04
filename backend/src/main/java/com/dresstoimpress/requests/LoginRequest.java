@@ -1,4 +1,4 @@
-package com.dresstoimpress.model;
+package com.dresstoimpress.requests;
 
 import lombok.Getter;
 

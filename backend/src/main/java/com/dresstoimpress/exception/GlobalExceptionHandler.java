@@ -1,6 +1,6 @@
 package com.dresstoimpress.exception;
 
-import com.dresstoimpress.model.ErrorResponse;
+import com.dresstoimpress.responses.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
