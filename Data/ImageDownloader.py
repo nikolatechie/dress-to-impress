@@ -1,5 +1,6 @@
 import pandas as pd
 import requests
+import os
 
 def createMetadataframe():
     df_copy = df.copy()
@@ -14,16 +15,18 @@ def createMetadataframe():
 
     df_copy.dropna(inplace=True)
 
+    df_copy = removeInvalidRows(df_copy)
+
     df_copy.to_csv('Data/Metadata.csv', index=False)
 
 def downloadImages():
-    for index, row in df.iloc[320:450].iterrows():
+    for index, row in df.iloc[0:].iterrows():
         downloadImage(row['IMAGE_VERSION_1'], row['IMGName1'])
         downloadImage(row['IMAGE_VERSION_2'], row['IMGName2'])
         downloadImage(row['IMAGE_VERSION_3'], row['IMGName3'])
 
 def downloadImage(image_url, image_name):
-    print(image_url, image_name)
+    #print(image_url, image_name)
     response = requests.get(image_url)
     if response.status_code == 200:
         with open("Data/Images/" + image_name, 'wb') as f:
@@ -31,8 +34,19 @@ def downloadImage(image_url, image_name):
     else:
         print(f"Failed to download image" + image_name)
 
+def removeInvalidRows(df):
+    for index, row in df.iterrows():
+        img_name_1 = row['IMGName1']
+        img_name_2 = row['IMGName2']
+        img_name_3 = row['IMGName3']
+            
+        if not (os.path.exists(f"Data/Images/{img_name_1}") and os.path.exists(f"Data/Images/{img_name_2}") and os.path.exists(f"Data/Images/{img_name_3}")):
+            df.drop(index, inplace=True)
+    return df;
+
+
 def preprocessData():
-    df.dropna(subset=['IMAGE_VERSION_1', 'IMAGE_VERSION_2', 'IMAGE_VERSION_3'], inplace=True)
+    df.dropna(inplace=True)
 
 if __name__ == '__main__':
     csv_file_path = 'Data/inditextech_hackupc_challenge_images.csv'
@@ -46,4 +60,4 @@ if __name__ == '__main__':
     csv_file_path = 'Data/Metadata.csv'
     df = pd.read_csv(csv_file_path)
 
-    downloadImages()
+    #downloadImages()
