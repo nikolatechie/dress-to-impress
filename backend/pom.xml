@@ -62,14 +62,19 @@
 			<artifactId>logback-classic</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>5.6</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.16.1</version>
 		</dependency>
-
-
 	</dependencies>
 
 	<build>
