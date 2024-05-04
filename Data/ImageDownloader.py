@@ -15,13 +15,13 @@ def createMetadataframe():
     df_copy.to_csv('Data/Metadata.csv', index=False)
 
 def downloadImages():
-    for index, row in df.iloc[0:101].iterrows():
+    for index, row in df.iloc[320:450].iterrows():
         downloadImage(row['IMAGE_VERSION_1'], row['IMGName1'])
         downloadImage(row['IMAGE_VERSION_2'], row['IMGName2'])
         downloadImage(row['IMAGE_VERSION_3'], row['IMGName3'])
 
 def downloadImage(image_url, image_name):
-    print(image_url)
+    print(image_url, image_name)
     response = requests.get(image_url)
     if response.status_code == 200:
         with open("Data/Images/" + image_name, 'wb') as f:
