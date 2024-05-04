@@ -52,7 +52,6 @@ public class UserService implements UserDetailsService {
         user.setEmailVerified(false);
         userRepository.save(user);
         LOGGER.info("User {} registered successfully", user.getEmail());
-        LOGGER.info("User portfolio has been created");
         emailVerificationService.createAndSendVerificationToken(user);
     }
 

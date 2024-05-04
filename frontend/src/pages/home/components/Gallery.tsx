@@ -1,7 +1,7 @@
-import {Container, Spinner} from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 import GalleryComponent from "./GalleryComponent.tsx";
-import {useInfiniteQuery} from "@tanstack/react-query";
-import {useEffect, useRef} from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useEffect, useRef } from "react";
 
 export interface GalleryImage {
     id: number;
@@ -74,7 +74,7 @@ function Gallery() {
                 fetchNextPage();
             }
         }, options);
-        if(pageEndRef.current)
+        if (pageEndRef.current)
             observer.observe(pageEndRef.current);
 
         return () => {
@@ -102,10 +102,10 @@ function Gallery() {
                                                 return (
                                                     <div key={`div-${i}-${j}`}>
                                                         <GalleryComponent key={`div-${i}`} season={"test"}
-                                                                          year={2024}
-                                                                          productType={0}
-                                                                          section={0}
-                                                                          imageSrc={item.url}/>
+                                                            year={2024}
+                                                            productType={0}
+                                                            section={0}
+                                                            imageSrc={item.url} />
                                                     </div>
                                                 )
                                             })
@@ -117,13 +117,14 @@ function Gallery() {
                     </div>
                     <div ref={pageEndRef}>
                         <button
-                            onClick={() => {fetchNextPage()}}
+                            onClick={() => { fetchNextPage() }}
                             disabled={!hasNextPage || isFetchingNextPage}
+                            hidden={hasNextPage}
                         >
                             {isFetchingNextPage
                                 ? 'Loading more...'
                                 : hasNextPage
-                                    ? 'Load More'
+                                    ? ''
                                     : 'Nothing more to load'}
                         </button>
                     </div>
