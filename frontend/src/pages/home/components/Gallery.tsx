@@ -40,7 +40,7 @@ function Gallery() {
 
     const pageEndRef = useRef<HTMLDivElement>(null)
 
-    const fetchImages = async ({ pageParam = 0 }): Promise<GalleryImagePage> => {
+    const fetchImages = async ({ pageParam = 0 }: {pageParam: number}): Promise<GalleryImagePage> => {
         const res = await fetch('/api/clothes-images?page=' + pageParam);
         return res.json()
     }
@@ -54,7 +54,7 @@ function Gallery() {
         isFetchingNextPage,
         status,
     } = useInfiniteQuery({
-        queryKey: ['imagessssss'],
+        queryKey: ['images'],
         queryFn: fetchImages,
         initialPageParam: 0,
         getNextPageParam: (lastPage) => lastPage.last ? undefined : lastPage.number + 1,
@@ -92,7 +92,7 @@ function Gallery() {
             <section className="mt-5">
                 <Container>
                     <h2>Our products:</h2>
-                    <div className="d-flex flex-wrap gap-4 mt-1">
+                    <div className="d-flex flex-wrap gap-4 mt-1 justify-content-center">
                         {
                             data && data.pages.map((page, i) => {
                                 return (

@@ -28,7 +28,7 @@ function Hero() {
                                     <span className="position-absolute top-0 start-0 w-100 h-100"
                                           style={{backgroundColor: "rgba(255,255,255,.05)"}}></span>
                                     <div className="card-body position-relative zindex-5">
-                                        <p className="fs-xl fw-bold text-primary text-uppercase mb-3">Fashion done right</p>
+                                        <p className="fs-xl fw-bold text-primary text-uppercase mb-3">Fashion. Done. right</p>
                                         <h1 className="display-5 text-light pb-3 mb-3">Dress to impress</h1>
                                         <p className="fs-lg text-light opacity-70 mb-5">Helping our clients meet their
                                             fashion needs for more than 10 years. We offer you the full spectrum of
