@@ -2,9 +2,9 @@ package com.dresstoimpress.service;
 
 import com.dresstoimpress.exception.UserNotRegisteredException;
 import com.dresstoimpress.exception.UserNotVerifiedException;
-import com.dresstoimpress.model.ErrorResponse;
-import com.dresstoimpress.model.JwtResponse;
-import com.dresstoimpress.model.LoginRequest;
+import com.dresstoimpress.responses.ErrorResponse;
+import com.dresstoimpress.responses.JwtResponse;
+import com.dresstoimpress.requests.LoginRequest;
 import com.dresstoimpress.model.User;
 import com.dresstoimpress.util.JwtUtil;
 import org.slf4j.Logger;

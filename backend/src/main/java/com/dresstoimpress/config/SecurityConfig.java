@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection for simplicity
                 .authorizeRequests(auth -> auth
-                        .antMatchers("/register", Constants.VERIFY_EMAIL_PATH, "/login").permitAll()
+                        .antMatchers("/register", Constants.VERIFY_EMAIL_PATH, "/login", "/webhooks/**").permitAll()
                         .anyRequest().authenticated() // Require authentication for all other requests
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

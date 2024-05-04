@@ -1,6 +1,7 @@
 package com.dresstoimpress.exception;
 
-import com.dresstoimpress.model.ErrorResponse;
+import com.dresstoimpress.responses.ErrorResponse;
+import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -40,11 +41,17 @@ public class GlobalExceptionHandler {
         LOGGER.error("The token is invalid: {}", e.getToken());
         return ResponseEntity.status(404).body(new ErrorResponse(e.getMessage()));
     }
-
+    @ExceptionHandler(ClothesChangeNotFoundByReplicateIdException.class)
+    public ResponseEntity<?> handleClothesChangeNotFoundByReplicateIdException(ClothesChangeNotFoundByReplicateIdException e) {
+        LOGGER.error(e.getMessage());
+        return ResponseEntity.status(404).body(new ErrorResponse(e.getMessage()));
+    }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e) {
         // Default exception
         LOGGER.error(e.getMessage());
         return ResponseEntity.status(500).body(new ErrorResponse(e.getMessage()));
     }
+
+
 }

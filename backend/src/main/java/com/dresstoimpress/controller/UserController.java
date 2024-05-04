@@ -1,6 +1,6 @@
 package com.dresstoimpress.controller;
 
-import com.dresstoimpress.model.ErrorResponse;
+import com.dresstoimpress.responses.ErrorResponse;
 import com.dresstoimpress.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

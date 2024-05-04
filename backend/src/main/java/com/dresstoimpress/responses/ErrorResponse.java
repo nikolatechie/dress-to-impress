@@ -1,4 +1,4 @@
-package com.dresstoimpress.model;
+package com.dresstoimpress.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
