@@ -2,6 +2,9 @@ import loginBgImage from "../../assets/img/login/signin-bg.jpg";
 import {FormEvent, useState} from "react";
 import {z} from "zod";
 import {Alert} from "react-bootstrap";
+import axios from "axios";
+// import {useMutation} from "@tanstack/react-query";
+import {useNavigate} from "react-router-dom";
 
 function LoginPage() {
     const [email, setEmail] = useState<string>();
@@ -10,13 +13,23 @@ function LoginPage() {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [error, setError] = useState<string>();
 
+    const navigate = useNavigate();
+
     const loginSchema = z.object({
         email: z.string().email(),
         password: z.string().min(8),
         rememberMe: z.boolean()
     })
 
-    const login = (e: FormEvent) => {
+    const sendLoginRequest = async () => {
+        return await axios.post("/api/login", {
+            email,
+            password,
+            rememberMe,
+        })
+    }
+
+    const login = async (e: FormEvent) => {
         e.preventDefault();
         const data = {
             email,
@@ -34,7 +47,16 @@ function LoginPage() {
         }
 
         //Send API
+        const resp = await sendLoginRequest();
         //Save JWT
+        const jwt = resp.data.jwt;
+
+        if(jwt) {
+            localStorage.setItem("jwt", jwt);
+            navigate("/");
+            return;
+        }
+        alert("There was an error retrieving the token. Please try again.");
     }
 
     return (

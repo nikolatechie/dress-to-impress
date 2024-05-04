@@ -41,9 +41,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests(auth -> auth
                 .antMatchers(
                     "/register",
-                        Constants.VERIFY_EMAIL_PATH,
-                        Constants.CLOTHES_IMAGES_PATH,
-                        "/login"
+                    Constants.VERIFY_EMAIL_PATH,
+                    Constants.CLOTHES_IMAGES_PATH,
+                    "/login",
+                    "/webhooks/**"
                 ).permitAll()
                 .anyRequest().authenticated() // Require authentication for all other requests
             )

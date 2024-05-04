@@ -9,10 +9,10 @@ function Gallery() {
                 <Container>
                     <h2>Our products:</h2>
                     <div className="d-flex flex-wrap gap-4 mt-1">
-                        {galleryJson.map((item) => {
+                        {galleryJson.map((item, i) => {
                             return (
-                                <div>
-                                    <GalleryComponent season={item.season} year={item.year} productType={item.productType}
+                                <div key={`div-${i}`}>
+                                    <GalleryComponent key={`div-${i}`} season={item.season} year={item.year} productType={item.productType}
                                                       section={item.section} imageSrc={item.imageSrc}/>
                                 </div>
                             )
