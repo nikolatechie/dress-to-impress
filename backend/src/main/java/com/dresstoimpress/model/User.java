@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -45,4 +46,7 @@ public class User {
     private EmailVerificationToken emailVerificationToken;
 
     private LocalDate verificationDate;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<ClothesChange> clothesChanges;
 }
