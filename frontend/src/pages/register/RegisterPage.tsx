@@ -3,6 +3,8 @@ import {FormEvent, useState} from "react";
 import {z} from "zod";
 import {useNavigate} from "react-router-dom";
 import {Alert} from "react-bootstrap";
+import axios from "axios";
+import {useMutation} from "@tanstack/react-query";
 
 function RegisterPage() {
     const [fullName, setFullName] = useState<string>();
@@ -21,6 +23,25 @@ function RegisterPage() {
         email: z.string().email(),
         password: z.string().min(8),
         confirmPassword: z.string().min(8)
+    })
+
+    const sendRegisterRequest = async () => {
+        return await axios.post("/api/register", {
+            firstName: fullName!.split(" ")[0],
+            lastName: fullName!.split(" ")[1],
+            email: email,
+            password: password
+        })
+    }
+
+    const registerMutation = useMutation({
+        mutationFn: sendRegisterRequest,
+        onSuccess: () => {
+            navigate("/login")
+        },
+        onError: (e) => {
+            setError(e.message)
+        }
     })
 
     const register = (e: FormEvent) => {
@@ -56,10 +77,7 @@ function RegisterPage() {
             return;
         }
 
-        //Send API
-
-        //Redirect to login
-        navigate("/login")
+        registerMutation.mutate();
     }
 
     return (

@@ -17,7 +17,7 @@ function VerifyEmailPage() {
             alert("Invalid token.");
             navigate("/");
         }
-
+        console.log(token);
         return await axios.get("/api/verify-email?token="+token)
     }
 

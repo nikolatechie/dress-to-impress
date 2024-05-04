@@ -14,6 +14,7 @@ public class ClothesChange {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String replicateId;
     private String imageUrl;
     private String prompt;
     private String clothingType;
