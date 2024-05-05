@@ -7,6 +7,11 @@ import axios from "axios";
 export interface GalleryImage {
     id: number;
     url: string;
+    year: number;
+    season: string;
+    productType: number;
+    section: number;
+    imageName: string;
 }
 export interface GalleryImagePage {
     content: GalleryImage[];
@@ -95,13 +100,15 @@ function Gallery() {
                                         {
                                             page.content.map((item, j) => {
                                                 return (
-                                                    <div key={`div-${j}`}>
-                                                        <GalleryComponent season={"test"}
-                                                                          year={2024}
-                                                                          productType={0}
-                                                                          section={0}
-                                                                          imageSrc={item.url}
-                                                                          id={item.id}/>
+                                                    <div key={'div-${j}'}>
+                                                    <GalleryComponent
+                                                        year={item.year}
+                                                        season={item.season}
+                                                        productType={item.productType}
+                                                        section={item.section}
+                                                        imageSrc={item.url}
+                                                        id={item.id}
+                                                    />
                                                     </div>
                                                 )
                                             })

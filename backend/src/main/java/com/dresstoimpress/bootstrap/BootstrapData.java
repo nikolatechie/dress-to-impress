@@ -48,6 +48,7 @@ public class BootstrapData implements CommandLineRunner {
 
         try (CSVReader csvReader = new CSVReader(new FileReader("../Data/Metadata.csv"))) {
             String[] values;
+            String[] headers = csvReader.readNext();
             while ((values = csvReader.readNext()) != null) {
                 ClothesImage currImg = new ClothesImage();
                 currImg.setUrl(values[0]);
