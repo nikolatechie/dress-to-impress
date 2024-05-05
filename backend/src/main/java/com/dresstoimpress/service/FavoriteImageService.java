@@ -37,7 +37,10 @@ public class FavoriteImageService {
         favoriteImageRepository.deleteById(favoriteId);
     }
 
-    public List<FavoriteImage> getFavoritesByUserEmail(String email) {
+    public List<FavoriteImage> getFavoritesByUserEmail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String email = userDetails.getUsername();
         return favoriteImageRepository.findByUserEmail(email);
     }
 

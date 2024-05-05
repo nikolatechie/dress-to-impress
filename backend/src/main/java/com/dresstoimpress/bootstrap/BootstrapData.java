@@ -33,6 +33,7 @@ public class BootstrapData implements CommandLineRunner {
             // Populate the table with links from the CSV file
             populateClothesImageTable();
         }
+        fetchFavoriteImageClothes();
     }
 
     private void populateClothesImageTable() {
@@ -62,5 +63,9 @@ public class BootstrapData implements CommandLineRunner {
         }
 
         return images;
+    }
+
+    private void fetchFavoriteImageClothes() {
+
     }
 }
