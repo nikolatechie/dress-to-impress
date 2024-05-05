@@ -1,0 +1,11 @@
+{
+    "version": 1,
+    "locale": {
+      "source": "en",
+      "targets": ["es"]
+    },
+    "buckets": {
+      "translations/[locale].json": "json"
+    }
+  }
+  
