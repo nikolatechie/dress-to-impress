@@ -1,10 +1,11 @@
 # Import libraries
 import numpy as np
 import pandas as pd
-from ImageDataGatherer import DataGatherer
+from Resnet.ImageDataGatherer import DataGatherer
 from PIL import Image
 import requests
 from io import BytesIO
+import os
 
 class GenerateSimilarImages:
 
@@ -17,17 +18,22 @@ class GenerateSimilarImages:
     def generate_similar_images(self):
 
         # load the numpy weights
-        saved_features = np.load("vgg_trained_features.npy")
-        saved_index = np.load("vgg_trained_index.npy")
+        project_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        saved_features_path = os.path.join(project_path, "Data/Resnet/vgg_trained_features.npy")
+        saved_features = np.load(saved_features_path)
+        saved_index_path = os.path.join(project_path, "Data/Resnet/vgg_trained_index.npy")
+        saved_index = np.load(saved_index_path)
 
         # Load the data
-        data = pd.read_csv('Data/Metadata.csv')
+        data_path = os.path.join(project_path, "Data/Metadata.csv")
+        data = pd.read_csv(data_path)
 
         '''
         Read the image URL
         '''
 
-        queryImage = Image.open(self.image_url)
+        response = requests.get(self.image_url)
+        queryImage = Image.open(BytesIO(response.content))
 
         queryImage_features = self.feature_extractor.extract_features(queryImage)
 
@@ -40,7 +46,7 @@ class GenerateSimilarImages:
         similarity_index_sorted = sorted(similarity_index.items(), key = lambda x : x[1])
         top_8_indexes = [idx for idx, _ in similarity_index_sorted][ : 8]
 
-        top_8_images_path = data.iloc[top_8_indexes]['IMGName1'].values
+        top_8_images_path = data.iloc[top_8_indexes]['IMAGE_VERSION_1'].values
 
         return queryImage, top_8_images_path
     
