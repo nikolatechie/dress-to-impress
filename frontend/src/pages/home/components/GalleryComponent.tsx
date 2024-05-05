@@ -1,8 +1,8 @@
 interface GalleryComponentProps {
-    season: string,
-    year: number,
-    productType: number,
-    section: number,
+    season?: string,
+    year?: number,
+    productType?: number,
+    section?: number,
     imageSrc: string
 }
 function GalleryComponent(props: GalleryComponentProps) {
