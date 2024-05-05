@@ -22,7 +22,7 @@ public class ClothesChangingController {
 
     @PostMapping("/change-clothes")
     public ResponseEntity<?> changeClothes(@RequestBody ChangeClothesRequest request) {
-        String imageUrl = request.getImageUrl();
+        String imageUrl = request.getClothingImageUrl();
         //String prompt = request.getPrompt();
         String clothingType = request.getClothingType();
 
@@ -30,7 +30,7 @@ public class ClothesChangingController {
         String prompt = clothesChangeService.fetchPrompt(imageUrl);
 
         // Call the service to change clothes
-        String replicateId = clothesChangeService.changeClothes(imageUrl, prompt, clothingType);
+        String replicateId = clothesChangeService.changeClothes(request.getImageUrl(), prompt, clothingType);
 
         if (replicateId != null) {
             return ResponseEntity.ok().body("{\"replicateId\":\"" + replicateId + "\"}");
