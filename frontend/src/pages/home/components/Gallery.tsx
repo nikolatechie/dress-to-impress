@@ -1,4 +1,3 @@
-import React from "react";
 import {Container, Spinner} from "react-bootstrap";
 import GalleryComponent from "./GalleryComponent.tsx";
 import {useInfiniteQuery} from "@tanstack/react-query";
@@ -49,12 +48,10 @@ function Gallery() {
 
     const {
         data,
-        error,
         fetchNextPage,
         hasNextPage,
         isFetching,
-        isFetchingNextPage,
-        status,
+        isFetchingNextPage
     } = useInfiniteQuery({
         queryKey: ['images'],
         queryFn: fetchImages,
@@ -92,7 +89,7 @@ function Gallery() {
                     <h2>Our products:</h2>
                     <div className="d-flex flex-wrap gap-4 mt-1 justify-content-center">
                         {
-                            data && data.pages.map((page, i) => {
+                            data && data.pages.map((page) => {
                                 return (
                                     <>
                                         {

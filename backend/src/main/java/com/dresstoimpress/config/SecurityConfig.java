@@ -44,7 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     Constants.VERIFY_EMAIL_PATH,
                     Constants.CLOTHES_IMAGES_PATH,
                     "/login",
-                    "/webhooks/**"
+                    "/webhooks/**",
+                    "/uploads/**"
                 ).permitAll()
                 .anyRequest().authenticated() // Require authentication for all other requests
             )
