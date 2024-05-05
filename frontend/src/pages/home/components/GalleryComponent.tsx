@@ -1,12 +1,17 @@
+import { useState } from 'react';
+
 interface GalleryComponentProps {
     id: number,
-    season: string,
-    year: number,
-    productType: number,
-    section: number,
+    season?: string,
+    year?: number,
+    productType?: number,
+    section?: number,
     imageSrc: string
 }
+
 function GalleryComponent(props: GalleryComponentProps) {
+    const [isHovered, setIsHovered] = useState(false);
+
     return (
         <>
             <div className="card card-hover border-0 bg-transparent" data-aos="flip-left">
@@ -14,8 +19,15 @@ function GalleryComponent(props: GalleryComponentProps) {
                     <img src={props.imageSrc} style={{height: "300px", width: "300px", objectFit: "cover"}} className="rounded-3" alt="Albert Flores"/>
                     <div
                         className="card-img-overlay d-flex flex-column align-items-center justify-content-center rounded-3">
-                        <span
-                            className="position-absolute top-0 start-0 w-100 h-100 bg-primary opacity-35 rounded-3"></span>
+            <div className="card card-hover border-0 bg-transparent position-relative">
+                <img src={props.imageSrc} style={{ height: "300px", width: "300px", objectFit: "cover" }} className="rounded-3" alt="Albert Flores" />
+                <div className="card-img-overlay d-flex flex-column align-items-center justify-content-center rounded-3">
+                    <span className="position-absolute top-0 start-0 w-100 h-100 bg-primary opacity-35 rounded-3"></span>
+                    <div className="position-absolute top-0 end-0 m-2">
+                        <span className={`bx bxs-star fs-3 cursor-pointer ${isHovered ? 'text-warning' : ''}`}
+                              onMouseEnter={() => setIsHovered(true)}
+                              onMouseLeave={() => setIsHovered(false)}
+                        ></span>
                         <div className="position-relative d-flex zindex-2">
                             <a href={`/upload?img=${props.id}`} className="btn btn-sm btn-secondary bg-white me-2">
                                 Try it on

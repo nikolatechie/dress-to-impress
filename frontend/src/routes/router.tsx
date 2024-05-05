@@ -4,6 +4,7 @@ import LoginPage from "../pages/login/LoginPage.tsx";
 import RegisterPage from "../pages/register/RegisterPage.tsx";
 import VerifyEmailPage from "../pages/verify-email/VerifyEmailPage.tsx";
 import UploadPage from "../pages/upload/UploadPage.tsx";
+import ProfilePage from "../pages/profile/ProfilePage.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -25,5 +26,9 @@ export const router = createBrowserRouter([
     {
         path: "/upload",
         element: <UploadPage />
+    },
+    {
+        path: "/profile",
+        element: <ProfilePage />
     }
 ]);

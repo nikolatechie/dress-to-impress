@@ -49,4 +49,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ClothesChange> clothesChanges;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<FavoriteImage> favoriteImages;
 }

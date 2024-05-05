@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Entity
-@Table(name = "clothes_image")
-public class ClothesImage {
+@Table(name = "favorite_image")
+public class FavoriteImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,20 +20,7 @@ public class ClothesImage {
     @NotBlank
     private String url;
 
-    @NotNull
-    private int year;
-
-    @NotNull
-    @NotBlank
-    private String season;
-
-    @NotNull
-    private int productType;
-
-    @NotNull
-    private int section;
-
-    @NotNull
-    @NotBlank
-    private String imageName;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

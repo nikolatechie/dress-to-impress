@@ -33,36 +33,39 @@ public class BootstrapData implements CommandLineRunner {
             // Populate the table with links from the CSV file
             populateClothesImageTable();
         }
+        fetchFavoriteImageClothes();
     }
 
     private void populateClothesImageTable() {
-        // Read the CSV file and extract URLs
-        List<String> imgUrls = readImageLinksFromCSV();
-
-        // Create and save ClothesImage entities for each URL
-        for (String url : imgUrls) {
-            ClothesImage clothesImage = new ClothesImage();
-            clothesImage.setUrl(url);
-            clothesImageRepository.save(clothesImage);
-        }
-
+        // Read the CSV file and extract images
+        List<ClothesImage> images = extractImagesFromCsv();
+        clothesImageRepository.saveAll(images);
         LOGGER.info("ClothesImage table populated with URLs from CSV file.");
     }
 
-    private List<String> readImageLinksFromCSV() {
-        List<String> imgUrls = new ArrayList<>();
+    private List<ClothesImage> extractImagesFromCsv() {
+        List<ClothesImage> images = new ArrayList<>();
 
         try (CSVReader csvReader = new CSVReader(new FileReader("../Data/Metadata.csv"))) {
             String[] values;
             while ((values = csvReader.readNext()) != null) {
-                if (values[0].startsWith("http")) {
-                    imgUrls.add(values[0]);
-                }
+                ClothesImage currImg = new ClothesImage();
+                currImg.setUrl(values[0]);
+                currImg.setYear(Integer.parseInt(values[3]));
+                currImg.setSeason(values[4]);
+                currImg.setProductType(Integer.parseInt(values[5]));
+                currImg.setSection(Integer.parseInt(values[6]));
+                currImg.setImageName(values[7]);
+                images.add(currImg);
             }
         } catch (Exception e) {
             LOGGER.warn(e.getMessage());
         }
 
-        return imgUrls;
+        return images;
+    }
+
+    private void fetchFavoriteImageClothes() {
+
     }
 }

@@ -49,10 +49,12 @@ function Gallery() {
 
     const {
         data,
+        error,
         fetchNextPage,
         hasNextPage,
         isFetching,
         isFetchingNextPage,
+        status,
     } = useInfiniteQuery({
         queryKey: ['images'],
         queryFn: fetchImages,
@@ -74,7 +76,7 @@ function Gallery() {
                 fetchNextPage();
             }
         }, options);
-        if(pageEndRef.current)
+        if (pageEndRef.current)
             observer.observe(pageEndRef.current);
 
         return () => {
@@ -92,7 +94,7 @@ function Gallery() {
                         {
                             data && data.pages.map((page, i) => {
                                 return (
-                                    <React.Fragment key={`f-${i}`}>
+                                    <>
                                         {
                                             page.content.map((item, j) => {
                                                 return (
@@ -107,7 +109,7 @@ function Gallery() {
                                                 )
                                             })
                                         }
-                                    </React.Fragment>
+                                    </>
                                 )
                             })
                         }
