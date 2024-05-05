@@ -30,10 +30,10 @@ public class ClothesChangingController {
         String prompt = clothesChangeService.fetchPrompt(imageUrl);
 
         // Call the service to change clothes
-        boolean result = clothesChangeService.changeClothes(imageUrl, prompt, clothingType);
+        String replicateId = clothesChangeService.changeClothes(imageUrl, prompt, clothingType);
 
-        if (result) {
-            return ResponseEntity.ok().build();
+        if (replicateId != null) {
+            return ResponseEntity.ok().body("{\"replicateId\":\"" + replicateId + "\"}");
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(

@@ -52,7 +52,7 @@ public class ClothesChangeService {
         return response;
     }
 
-    public Boolean changeClothes(String imageUrl, String prompt, String clothingType) {
+    public String changeClothes(String imageUrl, String prompt, String clothingType) {
         String requestBody = String.format("{\"version\": \"4e7916cc6ca0fe2e0e414c32033a378ff5d8879f209b1df30e824d6779403826\"," +
                 "\"webhook\": \"%s\"," +
                 "\"webhook_events_filter\": [\"completed\"]," +
@@ -107,7 +107,7 @@ public class ClothesChangeService {
 //                    TimeUnit.SECONDS.sleep(2);
 //                }
 
-                return true;
+                return replicateId;
             } catch (Exception e) {
                 // Handle JSON parsing error
                 e.printStackTrace();
