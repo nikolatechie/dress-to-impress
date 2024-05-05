@@ -3,8 +3,6 @@ import {FormEvent, useState} from "react";
 import {z} from "zod";
 import {Alert} from "react-bootstrap";
 import axios from "axios";
-// import {useMutation} from "@tanstack/react-query";
-import {useNavigate} from "react-router-dom";
 
 function LoginPage() {
     const [email, setEmail] = useState<string>();
@@ -12,8 +10,6 @@ function LoginPage() {
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [error, setError] = useState<string>();
-
-    const navigate = useNavigate();
 
     const loginSchema = z.object({
         email: z.string().email(),
@@ -53,7 +49,7 @@ function LoginPage() {
 
         if(jwt) {
             localStorage.setItem("jwt", jwt);
-            navigate("/");
+            window.location.href = "/";
             return;
         }
         alert("There was an error retrieving the token. Please try again.");
