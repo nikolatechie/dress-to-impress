@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -27,9 +28,10 @@ public class ClothesChangeService {
     @Value("${webhook.url}")
     private String WEBHOOK_URL;
 
-    private ClothesChangeRepository clothesChangeRepository;
+    private final ClothesChangeRepository clothesChangeRepository;
 
     private static final String API_ENDPOINT = "https://api.replicate.com/v1/predictions";
+    private static final String PROMPT_API_ENDPOINT = "http://localhost:8000/api/v1/describeImage";
 
     @Autowired
     public ClothesChangeService(ClothesChangeRepository clothesChangeRepository) {
@@ -238,5 +240,36 @@ public class ClothesChangeService {
     // Retrieve all ClothesChanges
     public List<ClothesChange> getAllClothesChanges() {
         return clothesChangeRepository.findAll();
+    }
+
+    public String fetchPrompt(String imageUrl) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // Construct URL with query parameter
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(PROMPT_API_ENDPOINT)
+                .queryParam("ImageUrl", imageUrl);
+
+        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Send POST request and directly parse response body to a Map
+        ResponseEntity<Map> responseEntity = restTemplate.exchange(
+            builder.toUriString(),
+            HttpMethod.POST,
+            requestEntity,
+            Map.class
+        );
+
+        // Check if response is successful and has a body
+        if (responseEntity.getStatusCode() == HttpStatus.OK && responseEntity.hasBody()) {
+            Map<String, String> responseBody = responseEntity.getBody();
+            if (responseBody != null && responseBody.containsKey("description")) {
+                return responseBody.get("description");
+            }
+        }
+
+        // Return empty string if response is not successful or description is not found
+        return "";
     }
 }
