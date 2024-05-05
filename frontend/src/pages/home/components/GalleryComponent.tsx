@@ -8,7 +8,7 @@ interface GalleryComponentProps {
 function GalleryComponent(props: GalleryComponentProps) {
     return (
         <>
-            <div className="card card-hover border-0 bg-transparent">
+            <div className="card card-hover border-0 bg-transparent" data-aos="flip-left">
                 <div className="position-relative">
                     <img src={props.imageSrc} style={{height: "300px", width: "300px", objectFit: "cover"}} className="rounded-3" alt="Albert Flores"/>
                     <div

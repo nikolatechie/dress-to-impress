@@ -1,7 +1,9 @@
+import React from "react";
 import {Container, Spinner} from "react-bootstrap";
 import GalleryComponent from "./GalleryComponent.tsx";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import {useEffect, useRef} from "react";
+import axios from "axios";
 
 export interface GalleryImage {
     id: number;
@@ -40,19 +42,17 @@ function Gallery() {
 
     const pageEndRef = useRef<HTMLDivElement>(null)
 
-    const fetchImages = async ({ pageParam = 0 }: {pageParam: number}): Promise<GalleryImagePage> => {
-        const res = await fetch('/api/clothes-images?page=' + pageParam);
-        return res.json()
+    const fetchImages = async ({ pageParam = 0 }): Promise<GalleryImagePage> => {
+        const res = await axios.get('/api/clothes-images?&page=' + pageParam);
+        return res.data
     }
 
     const {
         data,
-        error,
         fetchNextPage,
         hasNextPage,
         isFetching,
         isFetchingNextPage,
-        status,
     } = useInfiniteQuery({
         queryKey: ['images'],
         queryFn: fetchImages,
@@ -61,9 +61,10 @@ function Gallery() {
     })
 
     useEffect(() => {
+        console.log("test")
         const options = {
             rootMargin: "0px",
-            threshold: 1.0,
+            threshold: 0.01,
         };
         const observer = new IntersectionObserver(([entry]) => {
             if (
@@ -80,14 +81,10 @@ function Gallery() {
         return () => {
             observer.disconnect();
         }
-    }, [hasNextPage, isFetching])
+    }, [isFetching])
 
 
-    return isFetching ? (
-        <p>Loading...</p>
-    ) : status === 'error' ? (
-        <p>Error: {error.message}</p>
-    ) : (
+    return (
         <>
             <section className="mt-5">
                 <Container>
@@ -96,12 +93,12 @@ function Gallery() {
                         {
                             data && data.pages.map((page, i) => {
                                 return (
-                                    <>
+                                    <React.Fragment key={`f-${i}`}>
                                         {
                                             page.content.map((item, j) => {
                                                 return (
-                                                    <div key={`div-${i}-${j}`}>
-                                                        <GalleryComponent key={`div-${i}`} season={"test"}
+                                                    <div key={`div-${j}`}>
+                                                        <GalleryComponent season={"test"}
                                                                           year={2024}
                                                                           productType={0}
                                                                           section={0}
@@ -110,22 +107,12 @@ function Gallery() {
                                                 )
                                             })
                                         }
-                                    </>
+                                    </React.Fragment>
                                 )
                             })
                         }
                     </div>
-                    <div ref={pageEndRef}>
-                        <button
-                            onClick={() => {fetchNextPage()}}
-                            disabled={!hasNextPage || isFetchingNextPage}
-                        >
-                            {isFetchingNextPage
-                                ? 'Loading more...'
-                                : hasNextPage
-                                    ? 'Load More'
-                                    : 'Nothing more to load'}
-                        </button>
+                        <div ref={pageEndRef} style={{width: "100%", height: "750px"}}>
                     </div>
                     <div>{isFetching && !isFetchingNextPage ? <Spinner></Spinner> : null}</div>
                 </Container>
