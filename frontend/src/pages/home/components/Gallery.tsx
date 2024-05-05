@@ -61,7 +61,6 @@ function Gallery() {
     })
 
     useEffect(() => {
-        console.log("test")
         const options = {
             rootMargin: "0px",
             threshold: 0.01,
@@ -102,7 +101,8 @@ function Gallery() {
                                                                           year={2024}
                                                                           productType={0}
                                                                           section={0}
-                                                                          imageSrc={item.url}/>
+                                                                          imageSrc={item.url}
+                                                                          id={item.id}/>
                                                     </div>
                                                 )
                                             })

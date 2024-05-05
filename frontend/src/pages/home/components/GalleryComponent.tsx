@@ -1,4 +1,5 @@
 interface GalleryComponentProps {
+    id: number,
     season: string,
     year: number,
     productType: number,
@@ -16,17 +17,8 @@ function GalleryComponent(props: GalleryComponentProps) {
                         <span
                             className="position-absolute top-0 start-0 w-100 h-100 bg-primary opacity-35 rounded-3"></span>
                         <div className="position-relative d-flex zindex-2">
-                            <a href="#" className="btn btn-icon btn-secondary btn-facebook btn-sm bg-white me-2"
-                               aria-label="Facebook">
-                                <i className="bx bxl-facebook"></i>
-                            </a>
-                            <a href="#" className="btn btn-icon btn-secondary btn-linkedin btn-sm bg-white me-2"
-                               aria-label="LinkedIn">
-                                <i className="bx bxl-linkedin"></i>
-                            </a>
-                            <a href="#" className="btn btn-icon btn-secondary btn-twitter btn-sm bg-white"
-                               aria-label="Twitter">
-                                <i className="bx bxl-twitter"></i>
+                            <a href={`/upload?img=${props.id}`} className="btn btn-sm btn-secondary bg-white me-2">
+                                Try it on
                             </a>
                         </div>
                     </div>
