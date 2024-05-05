@@ -20,7 +20,6 @@ public class WebhookController {
     public ResponseEntity<?> handleReplicateWebhook(@RequestBody ReplicateWebhookDto body) {
         if(!body.getStatus().equalsIgnoreCase("succeeded"))
             return ResponseEntity.badRequest().build();
-        System.out.println(body);
         webhookService.processReplicateWebhook(body.getId(), body.getOutput().get(body.getOutput().size() - 1));
         return ResponseEntity.ok().build();
     }
