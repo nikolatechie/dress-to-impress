@@ -23,8 +23,11 @@ public class ClothesChangingController {
     @PostMapping("/change-clothes")
     public ResponseEntity<?> changeClothes(@RequestBody ChangeClothesRequest request) {
         String imageUrl = request.getImageUrl();
-        String prompt = request.getPrompt();
+        //String prompt = request.getPrompt();
         String clothingType = request.getClothingType();
+
+        // Get the prompt first
+        String prompt = clothesChangeService.fetchPrompt(imageUrl);
 
         // Call the service to change clothes
         boolean result = clothesChangeService.changeClothes(imageUrl, prompt, clothingType);

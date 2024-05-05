@@ -1,18 +1,16 @@
 package com.dresstoimpress.requests;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ChangeClothesRequest {
     private String imageUrl;
     private String prompt;
     private String clothingType;
-
-    public ChangeClothesRequest(String clothingType, String prompt, String imageUrl) {
-        this.clothingType = clothingType;
-        this.prompt = prompt;
-        this.imageUrl = imageUrl;
-    }
 }
