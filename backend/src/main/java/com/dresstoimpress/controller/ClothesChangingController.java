@@ -1,14 +1,13 @@
 package com.dresstoimpress.controller;
 
+import com.dresstoimpress.model.ClothesChange;
 import com.dresstoimpress.requests.ChangeClothesRequest;
 import com.dresstoimpress.responses.ErrorResponse;
 import com.dresstoimpress.service.ClothesChangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ClothesChangingController {
@@ -40,5 +39,14 @@ public class ClothesChangingController {
                     new ErrorResponse("Failed to change clothes.")
                 );
         }
+    }
+
+    @GetMapping("/filter-replicate/{replicateId}")
+    public ResponseEntity<?> filterReplicate(@PathVariable String replicateId) {
+        ClothesChange cc = clothesChangeService.getAllByReplicateId(replicateId);
+        if (cc != null) {
+            return ResponseEntity.ok(cc);
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 }

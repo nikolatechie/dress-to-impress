@@ -272,4 +272,8 @@ public class ClothesChangeService {
         // Return empty string if response is not successful or description is not found
         return "";
     }
+
+    public ClothesChange getAllByReplicateId(String replicateId) {
+        return clothesChangeRepository.findAllByReplicateId(replicateId);
+    }
 }
