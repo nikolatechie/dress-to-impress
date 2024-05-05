@@ -40,7 +40,11 @@ function UploadPage() {
     }
 
     const checkGenerationProgress = async () => {
-        const res = await axios.get(`/api/filter-replicate/${generationId}`);
+        const res = await axios.get(`/api/filter-replicate/${generationId}`, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+            }
+        });
         if(res.status > 199 && res.status < 300) {
             setGenerating(false);
             setGenerationId(undefined);
@@ -55,7 +59,9 @@ function UploadPage() {
             imageUrl: imageLink,
             clothingImageUrl: chosenImage,
             clothingType: clothingType
-        });
+        }, {headers: {
+                "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+            }});
         if(res.status > 199 && res.status < 300) {
             setGenerating(true);
             setGenerationId(res.data.replicateId);
