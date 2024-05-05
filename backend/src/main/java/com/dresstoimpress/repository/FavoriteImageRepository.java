@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface FavoriteImageRepository extends JpaRepository<FavoriteImage, Long> {
-    List<FavoriteImage> findByUserId(Long userId);
+    List<FavoriteImage> findByUserEmail(String email);
 }
