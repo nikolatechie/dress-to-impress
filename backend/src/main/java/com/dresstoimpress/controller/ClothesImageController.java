@@ -10,10 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/clothes-images")
@@ -40,6 +39,24 @@ public class ClothesImageController {
             LOGGER.error("Couldn't retrieve image URLs: {}", e.getMessage());
             return ResponseEntity.status(500).body(
                 new ErrorResponse(e.getMessage())
+            );
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getClothesImageById(@PathVariable Long id) {
+        try {
+            LOGGER.info("Retrieving image with ID: {}", id);
+            Optional<ClothesImage> image = clothesImageService.getImageById(id);
+            if (image.isPresent()) {
+                return ResponseEntity.ok().body(image.get());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            LOGGER.error("Couldn't retrieve image with ID {}: {}", id, e.getMessage());
+            return ResponseEntity.status(500).body(
+                    new ErrorResponse("Failed to retrieve image with ID: " + id)
             );
         }
     }

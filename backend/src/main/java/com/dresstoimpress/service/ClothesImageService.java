@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ClothesImageService {
     private final ClothesImageRepository clothesImageRepository;
@@ -18,5 +20,9 @@ public class ClothesImageService {
 
     public Page<ClothesImage> getImages(Pageable pageable) {
         return clothesImageRepository.findAll(pageable);
+    }
+
+    public Optional<ClothesImage> getImageById(Long id) {
+        return clothesImageRepository.findById(id);
     }
 }
