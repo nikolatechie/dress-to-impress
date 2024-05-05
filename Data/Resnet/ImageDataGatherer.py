@@ -21,6 +21,6 @@ class DataGatherer:
         x = np.expand_dims(x, axis=0)
 
         x = resnet_preprocess(x)
-        features = self.model.predict(x)
+        features = self.model.predict(x, verbose=0)
         features = features / np.linalg.norm(features)
         return features
