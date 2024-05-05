@@ -11,6 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ChangeClothesRequest {
     private String imageUrl;
-    private String prompt;
+    private String clothingImageUrl;
     private String clothingType;
 }
