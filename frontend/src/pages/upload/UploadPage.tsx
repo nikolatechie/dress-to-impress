@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import MyDropZone from "./components/MyDropZone.tsx";
 import axios from "axios";
 import { ImgComparisonSlider } from '@img-comparison-slider/react';
-import {Button, Container} from "react-bootstrap";
+import {Button, Container, Spinner} from "react-bootstrap";
 import {Swiper} from "swiper/react";
 import {SwiperSlide} from "swiper/react";
 import 'swiper/css';
@@ -20,6 +20,9 @@ function UploadPage() {
     const [resultImageLink, setResultImageLink] = useState<string>();
     const [generationId, setGenerationId] = useState<string>();
     const [chosenImage, setChosenImage] = useState<string>();
+    const [recommendations, setRecommendations] = useState<string[]>([]);
+    const [generating, setGenerating] = useState<boolean>(false);
+    const [clothingType, setClothingType] = useState<string>("topwear");
 
     const uploadImage = async (image: File) => {
         if(!image) return;
@@ -34,6 +37,39 @@ function UploadPage() {
         });
         const url: string = resp.data;
         setImageLink(url);
+    }
+
+    const checkGenerationProgress = async () => {
+        const res = await axios.get(`/api/filter-replicate/${generationId}`);
+        if(res.status > 199 && res.status < 300) {
+            setGenerating(false);
+            setGenerationId(undefined);
+            setResultImageLink(res.data.resultImageUrl);
+            return;
+        }
+        setTimeout(checkGenerationProgress, 1000);
+    }
+
+    const generate = async () => {
+        const res = await axios.post("/api/change-clothes", {
+            imageUrl: imageLink,
+            clothingImageUrl: chosenImage,
+            clothingType: clothingType
+        });
+        if(res.status > 199 && res.status < 300) {
+            setGenerating(true);
+            setGenerationId(res.data.replicateId);
+        }
+        setTimeout(checkGenerationProgress, 3000);
+    }
+
+    const getRecommendations = async () => {
+        const resp = await axios.post(
+            `/api/v1/findSimilarImages?baseImageUrl=${chosenImage}`,);
+
+        const urlList: {top8Images: string} = resp.data;
+        const components = urlList.top8Images.split(",");
+        setRecommendations([...components]);
     }
 
     const resetUserImage = () => {
@@ -62,9 +98,10 @@ function UploadPage() {
             navigate("/");
             return;
         }
-        setId(params.get("img")!);
-        getImageById(params.get("img")!)
-    }, [location])
+        if(!id) setId(params.get("img")!);
+        if(!chosenImage) getImageById(params.get("img")!);
+        if(recommendations.length == 0 && chosenImage) getRecommendations();
+    }, [location, chosenImage])
 
     return (
         <>
@@ -89,12 +126,26 @@ function UploadPage() {
                                 }
                             </ImgComparisonSlider>
                         </div>
-                        <Button variant={"primary"} onClick={resetUserImage}>Upload new image</Button>
+                        <div>
+                            <div className="mb-4">
+                                <label htmlFor="select-input" className="form-label">Clothing type</label>
+                                <select value={clothingType} onChange={(e) => setClothingType(e.target.value)} className="form-select" id="select-input">
+                                    <option value={"topwear"}>Topwear</option>
+                                    <option value={"bottomwear"}>Bottomwear</option>
+                                </select>
+                                <div className="d-flex gap-2 mt-2">
+                                    <Button variant={"primary"} disabled={generating} onClick={generate}>{!generating ? "Generate" : <Spinner></Spinner>}</Button>
+                                    <Button variant={"outline-secondary"} onClick={resetUserImage} disabled={generating}>Upload new image</Button>
+                                </div>
+                            </div>
+                        </div>
                     </>
                 }
                 <section className="mt-4">
                     {/*<div className="d-flex justify-content-center mt-2">*/}
-                        <Swiper
+                    <h4>Recommendations:</h4>
+                    <Swiper
+                        centeredSlides={true}
                             spaceBetween={20}
                             slidesPerView={3}
                             loop={true}
@@ -106,35 +157,40 @@ function UploadPage() {
                                 "prevEl": ".btn-prev",
                                 "nextEl": ".btn-next"
                             }}
-                            onSlideChange={() => console.log('slide change')}
-                            onSwiper={(swiper) => console.log(swiper)}
+                            onSlideChange={(swiper) => {
+                                setChosenImage(recommendations[swiper.activeIndex]);
+                                console.log(recommendations[swiper.activeIndex])
+                            }}
                         >
                             <SwiperSlide>
                                 <div className="ratio ratio-16x9 bg-secondary">
                                     <img style={{objectFit: "cover"}} src={chosenImage} />
                                 </div>
                             </SwiperSlide>
-                            <SwiperSlide>
-                                <div className="ratio ratio-16x9 bg-secondary">
-                                    <div
-                                        className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center display-4">1
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <div className="ratio ratio-16x9 bg-secondary">
-                                    <div
-                                        className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center display-4">1
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <div className="ratio ratio-16x9 bg-secondary">
-                                    <div
-                                        className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center display-4">1
-                                    </div>
-                                </div>
-                            </SwiperSlide>
+                            {
+                                recommendations.map((url, i) => {
+                                    return (
+                                        <SwiperSlide>
+                                            <div key={`div-r-${i}`} className="ratio ratio-16x9 bg-secondary">
+                                                <img key={`img-r-${i}`} style={{objectFit: "cover"}} src={url}/>
+                                            </div>
+                                        </SwiperSlide>
+                                    )
+                                })
+                            }
+                            {
+                                recommendations.length == 0 &&
+                                [1,2,3,4,5,6,7,8].map(i => {
+                                    return (
+                                        <SwiperSlide>
+                                            <div key={`div-r-${i}`} className="ratio ratio-16x9 bg-secondary">
+                                                <Spinner variant="border"></Spinner>
+                                            </div>
+                                        </SwiperSlide>
+                                    )
+                                })
+                            }
+
                         </Swiper>
                     {/*</div>*/}
                 </section>
