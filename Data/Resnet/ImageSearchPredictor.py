@@ -44,9 +44,12 @@ class GenerateSimilarImages:
             similarity_index[i] = distance
 
         similarity_index_sorted = sorted(similarity_index.items(), key = lambda x : x[1])
-        top_8_indexes = [idx for idx, _ in similarity_index_sorted][ : 8]
+        top_8_indexes = [idx for idx, _ in similarity_index_sorted][ : 30]
 
         top_8_images_path = data.iloc[top_8_indexes]['IMAGE_VERSION_1'].values
+
+        top_8_images_path = list(set(top_8_images_path) - set([self.image_url]))
+        top_8_images_path = top_8_images_path[:8]
 
         return queryImage, top_8_images_path
     
