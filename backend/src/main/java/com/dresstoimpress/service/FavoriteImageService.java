@@ -37,8 +37,8 @@ public class FavoriteImageService {
         favoriteImageRepository.deleteById(favoriteId);
     }
 
-    public List<FavoriteImage> getFavoritesByUserId(Long userId) {
-        return favoriteImageRepository.findByUserId(userId);
+    public List<FavoriteImage> getFavoritesByUserEmail(String email) {
+        return favoriteImageRepository.findByUserEmail(email);
     }
 
     public List<FavoriteImage> getAllFavorites() {

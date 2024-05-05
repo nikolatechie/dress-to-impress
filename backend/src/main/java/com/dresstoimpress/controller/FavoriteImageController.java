@@ -5,6 +5,7 @@ import com.dresstoimpress.service.FavoriteImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -31,10 +32,10 @@ public class FavoriteImageController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<FavoriteImage>> getFavoritesByUserId(@PathVariable Long userId) {
-        List<FavoriteImage> favorites = favoriteImageService.getFavoritesByUserId(userId);
+    @GetMapping
+    public ResponseEntity<List<FavoriteImage>> getFavoritesByUserEmail() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<FavoriteImage> favorites = favoriteImageService.getFavoritesByUserEmail(email);
         return new ResponseEntity<>(favorites, HttpStatus.OK);
     }
 }
-
