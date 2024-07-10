@@ -11,7 +11,7 @@ Dress to Impress is a web application that allows users to virtually try on clot
 
 ## Development process
 
-Frontend was built using **React.js** + **Typescript**. Backend was developed mostly using **Java Spring Boot**, but we also utilised **Python FastAPI** that allows communication with ML model. We chose **ResNet** image recognition model as its performance turned out to be better than VGG and Xception. 
+Frontend was built using **React.js** + **Typescript**. Backend was developed mostly using **Java Spring Boot**, but we also utilised **Python FastAPI** that allows communication with the ML model. We chose **ResNet** image recognition model as its performance turned out to be better than VGG and Xception. 
 
 ## Acknowledgments
 
@@ -22,6 +22,7 @@ Frontend was built using **React.js** + **Typescript**. Backend was developed mo
 
 Special thanks to the following contributors:
 
+- Nikola Grujic ([@nikolatechie](https://www.github.com/nikolatechie))
 - Vladan Cvjetkovic ([@cvele0](https://www.github.com/cvele0))
 - Milan Jovanovic ([@MJovanovic40](https://www.github.com/MJovanovic40))
 - Lukas Pottner ([@Potti1234](https://www.github.com/Potti1234))
